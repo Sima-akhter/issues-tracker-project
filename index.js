@@ -7,7 +7,7 @@
             if (u === "admin" && p === "admin123") {
                 document.getElementById('login-area').style.display = 'none';
                 document.getElementById('main-app').classList.remove('hidden');
-                getIssues();
+                
             } else {
                 alert("password vul dile kemne khulbe vai");
             }
