@@ -1,6 +1,12 @@
 
-
 let myData = [];
+
+function showLoader(){
+    document.getElementById("loader").classList.remove("hidden");
+}
+function hideLoader(){
+    document.getElementById("loader").classList.add("hidden");
+}
 
 function startLogin() {
     const u = document.getElementById('user-input').value;
@@ -29,10 +35,12 @@ async function getIssues() {
     } catch (err) {
         console.log(err);
     }
+    hideLoader();
 
 }
 
 function showUI(dataArray) {
+    hideLoader();
 
     const list = document.getElementById('card-list');
 
@@ -137,6 +145,7 @@ async function searchMe() {
     } catch (err) {
         console.log(err);
     }
+    hideLoader();
 
 }
 
