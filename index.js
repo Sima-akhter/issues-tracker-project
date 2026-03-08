@@ -88,10 +88,14 @@ function showUI(dataArray) {
         ${val.description}
         </p>
 
-        <div class="flex gap-2 mb-6">
-            <span class="bg-red-50 text-red-500 text-[9px] font-black px-2 py-0.5 rounded border border-red-100 uppercase">BUG</span>
-            <span class="bg-orange-50 text-orange-500 text-[9px] font-black px-2 py-0.5 rounded border border-orange-100 uppercase">HELP WANTED</span>
-        </div>
+       <div class="flex gap-2 mb-6">
+    ${val.labels.map(label => `
+        <span class="text-[9px] font-black px-2 py-0.5 rounded border uppercase
+            ${label === 'BUG' ? 'bg-red-50 text-red-500 border-red-100' : 'bg-orange-50 text-orange-500 border-orange-100'}">
+            ${label}
+        </span>
+    `).join('')}
+</div>
 
         <div class="mt-auto pt-4 border-t border-gray-50 flex justify-between text-[10px] text-gray-400 font-bold">
             <span>#${val.id} by ${val.author}</span>
@@ -159,55 +163,73 @@ async function showPopup(id) {
     try {
 
         const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
-
         const data = await res.json();
 
         const single = data.data;
 
+        // Label color mapping
+        const labelColors = {
+            'BUG': 'bg-red-50 text-red-500 border-red-100',
+            'HELP WANTED': 'bg-orange-50 text-orange-500 border-orange-100',
+            'ENHANCEMENT': 'bg-green-50 text-green-500 border-green-100',
+            'DOCUMENTATION': 'bg-blue-50 text-blue-500 border-blue-100',
+            'DEFAULT': 'bg-gray-100 text-gray-600 border-gray-300'
+        };
+
+        const labelsHTML = single.labels && single.labels.length > 0
+            ? single.labels.map(label => `
+                <span class="text-[9px] font-black px-2 py-0.5 rounded border uppercase
+            ${label === 'BUG' ? 'bg-red-50 text-red-500 border-red-100' : 'bg-orange-50 text-orange-500 border-orange-100'}">
+            ${label}
+        </span>
+              `).join('')
+            : `<span class="text-[9px] font-black px-2 py-0.5 rounded border uppercase bg-gray-100 text-gray-400 border-gray-200">No Label</span>`;
+
         box.innerHTML = `
         <div class="flex flex-col">
 
-        <h2 class="text-2xl font-black text-gray-900 mb-3">
-        ${single.title}
-        </h2>
+            <h2 class="text-2xl font-black text-gray-900 mb-3">
+                ${single.title}
+            </h2>
 
-        <div class="flex items-center gap-3 mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="${single.status === 'open' ? 'bg-green-500' : 'bg-purple-600'} text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">
+                    ${single.status}
+                </span>
+                <span class="text-gray-400 text-[12px] font-medium">
+                    • Author: ${single.author}
+                </span>
+            </div>
 
-        <span class="${single.status === 'open' ? 'bg-green-500' : 'bg-purple-600'} text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">
-        ${single.status}
-        </span>
+            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                ${single.description}
+            </p>
 
-        <span class="text-gray-400 text-[12px] font-medium">
-        • Author: ${single.author}
-        </span>
+            <div class="flex gap-2 mb-6">
+                ${labelsHTML}
+            </div>
 
-        </div>
+            <div class="grid grid-cols-2 gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
 
-        <p class="text-gray-600 text-sm leading-relaxed mb-8">
-        ${single.description}
-        </p>
+                <div>
+                    <p class="text-[10px] text-gray-400 font-black uppercase mb-1">Priority:</p>
+                    <span class="bg-red-500 text-white text-[10px] font-black px-3 py-1 rounded uppercase">
+                        ${single.priority}
+                    </span>
+                </div>
 
-        <div class="grid grid-cols-2 gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                <div>
+                    <p class="text-[10px] text-gray-400 font-black uppercase mb-1">Status:</p>
+                    <p class="font-bold text-gray-800">${single.status}</p>
+                </div>
 
-        <div>
-        <p class="text-[10px] text-gray-400 font-black uppercase mb-1">Priority:</p>
-        <span class="bg-red-500 text-white text-[10px] font-black px-3 py-1 rounded uppercase">
-        ${single.priority}
-        </span>
-        </div>
+            </div>
 
-        <div>
-        <p class="text-[10px] text-gray-400 font-black uppercase mb-1">Status:</p>
-        <p class="font-bold text-gray-800">${single.status}</p>
-        </div>
-
-        </div>
-
-        <div class="flex justify-end mt-8">
-        <button onclick="hidePopup()" class="close-btn shadow-lg uppercase tracking-wider text-sm">
-        Close
-        </button>
-        </div>
+            <div class="flex justify-end mt-8">
+                <button onclick="hidePopup()" class="close-btn shadow-lg uppercase tracking-wider text-sm">
+                    Close
+                </button>
+            </div>
 
         </div>
         `;
@@ -215,7 +237,6 @@ async function showPopup(id) {
     } catch (err) {
         console.log(err);
     }
-
 }
 
 function hidePopup() {
