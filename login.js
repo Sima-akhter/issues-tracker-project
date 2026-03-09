@@ -4,7 +4,7 @@ function startLogin() {
     const p = document.getElementById('pass-input').value;
 
     if (u === "admin" && p === "admin123") {
-        window.location.href='dashboard.html'
+        window.location.href='index.html'
         
         
     } else {
