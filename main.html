@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Issues Tracker</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -81,89 +81,90 @@
 
 
 
-   
+
 
     <div id="main-app" class="">
         <nav
-    class="bg-white border-b px-8 py-4 flex flex-col md:flex-row justify-between items-center sticky top-0 z-40 shadow-sm">
-    
-    <div class="flex items-center gap-2 mb-4 md:mb-0">
-        <img class="w-11" src="./assets/github-logo.png" alt="">
-        <span class="font-extrabold text-xl tracking-tight text-gray-800">GitHub Issues Tracker</span>
-    </div>
+            class="bg-white border-b px-8 py-4 flex flex-col md:flex-row justify-between items-center sticky top-0 z-40 shadow-sm">
 
-    <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-        
-        <div class="relative flex-grow w-full sm:min-w-[300px]">
-            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <div class="flex items-center gap-2 mb-4 md:mb-0">
+                <img class="w-11" src="./assets/github-logo.png" alt="">
+                <span class="font-extrabold text-xl tracking-tight text-gray-800">GitHub Issues Tracker</span>
+            </div>
 
-            <input type="text" id="find-box" onkeyup="searchMe()" placeholder="Search issues..."
-                class="w-full pl-11 pr-4 py-2.5 border border-gray-200 rounded-xl outline-none focus:border-indigo-500 bg-gray-50">
-        </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
 
-        <button
-            class="bg-[#4f46e5] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow hover:bg-indigo-700 transition w-full sm:w-auto">
-            + New Issue
-        </button>
+                <div class="relative flex-grow w-full sm:min-w-[300px]">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
 
-    </div>
-</nav>
+                    <input type="text" id="find-box" onkeyup="searchMe()" placeholder="Search issues..."
+                        class="w-full pl-11 pr-4 py-2.5 border border-gray-200 rounded-xl outline-none focus:border-indigo-500 bg-gray-50">
+                </div>
+
+                <button
+                    class="bg-[#4f46e5] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow hover:bg-indigo-700 transition w-full sm:w-auto">
+                    + New Issue
+                </button>
+
+            </div>
+        </nav>
 
         <div class="max-w-7xl mx-auto p-4 md:p-8">
 
-    <!-- Filter Buttons -->
-    <div class="flex flex-wrap gap-3 mb-10 bg-white p-2 rounded-xl border border-gray-100 shadow-sm">
-        <button id="all" onclick="filterData('all')" class="btn-filter active-all">All</button>
-        <button id="open" onclick="filterData('open')" class="btn-filter">Open</button>
-        <button id="closed" onclick="filterData('closed')" class="btn-filter">Closed</button>
-    </div>
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap gap-3 mb-10 bg-white p-2 rounded-xl border border-gray-100 shadow-sm">
+                <button id="all" onclick="filterData('all')" class="btn-filter active-all">All</button>
+                <button id="open" onclick="filterData('open')" class="btn-filter">Open</button>
+                <button id="closed" onclick="filterData('closed')" class="btn-filter">Closed</button>
+            </div>
 
-    <!-- Info Section -->
-    <div
-        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 bg-white p-4 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+            <!-- Info Section -->
+            <div
+                class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 bg-white p-4 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
 
-        <div class="flex items-center gap-4">
-            <img src="./assets/Aperture.png" alt="" class="w-10 h-10 sm:w-12 sm:h-12">
+                <div class="flex items-center gap-4">
+                    <img src="./assets/Aperture.png" alt="" class="w-10 h-10 sm:w-12 sm:h-12">
 
-            <div>
-                <h3 id="info-text" class="text-xl sm:text-2xl font-black text-gray-900 leading-none">0 Issues</h3>
-                <p class="text-[12px] text-gray-400 font-bold mt-1 uppercase tracking-wide">
-                    Track and manage your project issues
-                </p>
+                    <div>
+                        <h3 id="info-text" class="text-xl sm:text-2xl font-black text-gray-900 leading-none">0 Issues
+                        </h3>
+                        <p class="text-[12px] text-gray-400 font-bold mt-1 uppercase tracking-wide">
+                            Track and manage your project issues
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 text-xs font-bold text-gray-500 uppercase flex-wrap">
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                        Open
+                    </span>
+
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+                        Closed
+                    </span>
+                </div>
+            </div>
+
+            <!-- Loader -->
+            <div id="loader" class="flex justify-center py-10">
+                <span class="loading loading-dots loading-xl"></span>
+            </div>
+
+            <!-- Cards -->
+            <div id="card-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
             </div>
         </div>
 
-        <div class="flex gap-4 text-xs font-bold text-gray-500 uppercase flex-wrap">
-            <span class="flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
-                Open
-            </span>
-
-            <span class="flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
-                Closed
-            </span>
+        <!-- Modal -->
+        <div id="item-modal" class="fixed inset-0 modal-bg hidden items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-[24px] w-full max-w-2xl overflow-hidden relative shadow-2xl p-6 md:p-8">
+                <div id="modal-data"></div>
+            </div>
         </div>
-    </div>
-
-    <!-- Loader -->
-    <div id="loader" class="flex justify-center py-10">
-        <span class="loading loading-dots loading-xl"></span>
-    </div>
-
-    <!-- Cards -->
-    <div id="card-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-    </div>
-</div>
-
-<!-- Modal -->
-<div id="item-modal" class="fixed inset-0 modal-bg hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-[24px] w-full max-w-2xl overflow-hidden relative shadow-2xl p-6 md:p-8">
-        <div id="modal-data"></div>
-    </div>
-</div>
-    <script src="./index.js"></script>
+        <script src="./index.js"></script>
 </body>
 
 </html>
