@@ -161,7 +161,9 @@ async function searchMe() {
 }
 
 async function showPopup(id) {
+    
 
+showLoader();
     const modal = document.getElementById('item-modal');
     const box = document.getElementById('modal-data');
 
@@ -244,6 +246,8 @@ async function showPopup(id) {
     } catch (err) {
         console.log(err);
     }
+     hideLoader();
+   
 }
 
 function hidePopup() {
